@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2016 Jian Chang <aa65535@live.com>
+# Copyright (C) 2017 Jian Chang <aa65535@live.com>
 #
 # This is free software, licensed under the GNU General Public License v3.
 # See /LICENSE for more information.
@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=simple-obfs
-PKG_VERSION:=0.0.1
-PKG_RELEASE:=2
+PKG_VERSION:=0.0.2
+PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/shadowsocks/simple-obfs.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE)
-PKG_SOURCE_VERSION:=4461e1fb36f92b4f27149aa54cd19a760781f807
+PKG_SOURCE_VERSION:=149b57d24d90fff3f7983b42967f6354acb5eeca
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 
 PKG_LICENSE:=GPLv3
