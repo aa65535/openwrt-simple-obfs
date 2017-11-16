@@ -35,7 +35,7 @@ define Package/simple-obfs/Default
 	CATEGORY:=Network
 	TITLE:=Simple-obfs
 	URL:=https://github.com/shadowsocks/simple-obfs
-	DEPENDS:=+libev +libpthread +libsodium
+	DEPENDS:=+libev +libpthread
 endef
 
 Package/simple-obfs = $(call Package/simple-obfs/Default)
