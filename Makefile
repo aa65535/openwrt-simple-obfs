@@ -30,29 +30,25 @@ PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/simple-obfs/Default
+define Package/simple-obfs
 	SECTION:=net
 	CATEGORY:=Network
 	TITLE:=Simple-obfs
 	URL:=https://github.com/shadowsocks/simple-obfs
-endef
-
-define Package/simple-obfs
-	$(call Package/simple-obfs/Default)
-	VARIANT:=shared
-	DEPENDS:=+libev +libpthread
+	DEPENDS:=+!STATIC_LINK:libev +libpthread
+	PKG_BUILD_DEPENDS:=+STATIC_LINK:libev
 endef
 
 Package/simple-obfs-server = $(Package/simple-obfs)
 
-define Package/simple-obfs-static
-	$(call Package/simple-obfs/Default)
-	VARIANT:=static
-	DEPENDS:=+libpthread
-	PKG_BUILD_DEPENDS:=+libev
+define Package/simple-obfs-server/config
+menu "Simple-obfs Compile Configuration"
+	depends on PACKAGE_simple-obfs || PACKAGE_simple-obfs-server
+	config STATIC_LINK
+		bool "enable static link libraries."
+		default n
+endmenu
 endef
-
-Package/simple-obfs-server-static = $(Package/simple-obfs-static)
 
 define Package/simple-obfs/description
 Simple-obfs is a simple obfusacting tool, designed as plugin server of shadowsocks.
@@ -60,18 +56,15 @@ endef
 
 Package/simple-obfs-server/description = $(Package/simple-obfs/description)
 
-Package/simple-obfs-static/description = $(Package/simple-obfs/description)
-Package/simple-obfs-server-static/description = $(Package/simple-obfs/description)
-
 CONFIGURE_ARGS += \
-				--disable-ssp \
-				--disable-documentation \
-				--disable-assert
+	--disable-ssp \
+	--disable-documentation \
+	--disable-assert
 
-ifeq ($(BUILD_VARIANT),static)
+ifeq ($(CONFIG_STATIC_LINK),y)
 	CONFIGURE_ARGS += \
-				--with-ev="$(STAGING_DIR)/usr" \
-				LDFLAGS="-Wl,-static -static -static-libgcc"
+		--with-ev="$(STAGING_DIR)/usr" \
+		LDFLAGS="-Wl,-static -static -static-libgcc"
 endif
 
 define Package/simple-obfs/install
@@ -79,17 +72,10 @@ define Package/simple-obfs/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/obfs-local $(1)/usr/bin
 endef
 
-Package/simple-obfs-static/install = $(Package/simple-obfs/install)
-
 define Package/simple-obfs-server/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/obfs-server $(1)/usr/bin
 endef
 
-Package/simple-obfs-server-static/install = $(Package/simple-obfs-server/install)
-
 $(eval $(call BuildPackage,simple-obfs))
 $(eval $(call BuildPackage,simple-obfs-server))
-
-$(eval $(call BuildPackage,simple-obfs-static))
-$(eval $(call BuildPackage,simple-obfs-server-static))
