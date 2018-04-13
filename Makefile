@@ -35,8 +35,8 @@ define Package/simple-obfs
 	CATEGORY:=Network
 	TITLE:=Simple-obfs
 	URL:=https://github.com/shadowsocks/simple-obfs
-	DEPENDS:=+!STATIC_LINK:libev +libpthread
-	PKG_BUILD_DEPENDS:=+STATIC_LINK:libev
+	DEPENDS:=+!SIMPLE_OBFS_STATIC_LINK:libev +libpthread
+	PKG_BUILD_DEPENDS:=+SIMPLE_OBFS_STATIC_LINK:libev
 endef
 
 Package/simple-obfs-server = $(Package/simple-obfs)
@@ -44,7 +44,7 @@ Package/simple-obfs-server = $(Package/simple-obfs)
 define Package/simple-obfs-server/config
 menu "Simple-obfs Compile Configuration"
 	depends on PACKAGE_simple-obfs || PACKAGE_simple-obfs-server
-	config STATIC_LINK
+	config SIMPLE_OBFS_STATIC_LINK
 		bool "enable static link libraries."
 		default n
 endmenu
@@ -61,7 +61,7 @@ CONFIGURE_ARGS += \
 	--disable-documentation \
 	--disable-assert
 
-ifeq ($(CONFIG_STATIC_LINK),y)
+ifeq ($(CONFIG_SIMPLE_OBFS_STATIC_LINK),y)
 	CONFIGURE_ARGS += \
 		--with-ev="$(STAGING_DIR)/usr" \
 		LDFLAGS="-Wl,-static -static -static-libgcc"
