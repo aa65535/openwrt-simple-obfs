@@ -27,6 +27,9 @@ PKG_INSTALL:=1
 PKG_FIXUP:=autoreconf
 PKG_USE_MIPS16:=0
 PKG_BUILD_PARALLEL:=1
+PKG_BUILD_DEPENDS:=libev
+
+PKG_CONFIG_DEPENDS:= CONFIG_SIMPLE_OBFS_STATIC_LINK
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -35,8 +38,7 @@ define Package/simple-obfs
 	CATEGORY:=Network
 	TITLE:=Simple-obfs
 	URL:=https://github.com/shadowsocks/simple-obfs
-	DEPENDS:=+!SIMPLE_OBFS_STATIC_LINK:libev +libpthread
-	PKG_BUILD_DEPENDS:=+SIMPLE_OBFS_STATIC_LINK:libev
+	DEPENDS:=+libpthread +!SIMPLE_OBFS_STATIC_LINK:libev
 endef
 
 Package/simple-obfs-server = $(Package/simple-obfs)
