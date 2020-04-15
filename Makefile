@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2017-2019 Jian Chang <aa65535@live.com>
+# Copyright (C) 2017-2020 Jian Chang <aa65535@live.com>
 #
 # This is free software, licensed under the GNU General Public License v3.
 # See /LICENSE for more information.
@@ -14,14 +14,13 @@ PKG_RELEASE:=5
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/shadowsocks/simple-obfs.git
 PKG_SOURCE_VERSION:=486bebd9208539058e57e23a12f23103016e09b4
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)/$(BUILD_VARIANT)/$(PKG_SOURCE_SUBDIR)
 
 PKG_LICENSE:=GPLv3
 PKG_LICENSE_FILES:=LICENSE
 PKG_MAINTAINER:=Jian Chang <aa65535@live.com>
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)/$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION)
 
 PKG_INSTALL:=1
 PKG_FIXUP:=autoreconf
